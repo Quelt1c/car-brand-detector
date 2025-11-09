@@ -50,7 +50,7 @@ class CarsDataset(Dataset):
         if self.is_test:
             return image
         else:
-            label = self.annotations.iloc[idx, 2] # 'class_id' is at index 2
+            label = self.annotations.iloc[idx, 2] - 1 # 'class_id' is at index 2
             return image, label
 
 if __name__ == '__main__':
