@@ -7,7 +7,7 @@ from torch.utils.data import Dataset
 from torchvision import transforms
 
 class CarsDataset(Dataset):
-    def __init__(self, root_dir, annotations_file, transform=None):
+    def __init__(self, root_dir, annotations_file, transform=None, is_test=False):
         """
         Args:
             root_dir (str): Directory with all the images.
@@ -18,6 +18,7 @@ class CarsDataset(Dataset):
         self.root_dir = root_dir
         self.annotations = pd.read_csv(annotations_file)
         self.transform = transform
+        self.is_test = is_test
 
     def __len__(self):
         return len(self.annotations)
@@ -43,12 +44,14 @@ class CarsDataset(Dataset):
         # Crop image to bounding box
         image = image.crop((x1, y1, x2, y2))
 
-        label = self.annotations.iloc[idx, 2] # 'class_id' is at index 2
-
         if self.transform:
             image = self.transform(image)
 
-        return image, label
+        if self.is_test:
+            return image
+        else:
+            label = self.annotations.iloc[idx, 2] # 'class_id' is at index 2
+            return image, label
 
 if __name__ == '__main__':
     pass
