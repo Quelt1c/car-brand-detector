@@ -1,1 +1,10 @@
-src/myenv/
+# Data
+/data/
+
+# Models
+/models/
+
+# Python
+*.pyc
+__pycache__/
+.ipynb_checkpoints/
