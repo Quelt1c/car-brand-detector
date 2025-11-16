@@ -8,9 +8,9 @@ from src.model import create_model
 from src.data_preprocessing import get_data_loaders
 
 # --- Hyperparameters (Task 2.3) ---
-LEARNING_RATE = 0.001
+LEARNING_RATE = 1e-5
 BATCH_SIZE = 32
-NUM_EPOCHS = 10  # Start with 10 and increase as needed
+NUM_EPOCHS = 10000  # Start with 10 and increase as needed
 NUM_CLASSES = 196
 VAL_SPLIT = 0.2
 NUM_WORKERS = 4
@@ -52,7 +52,7 @@ def main():
     criterion = nn.CrossEntropyLoss()
     
     # We are only training the final 'fc' layer, as the base is frozen
-    optimizer = optim.Adam(model.fc.parameters(), lr=LEARNING_RATE)
+    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
     
     # --- Training Loop (Task 2.2) ---
     print("Starting training...")

@@ -37,7 +37,7 @@ if __name__ == '__main__':
     # This block allows you to run this file directly to test the model
     # python -m src.model
     
-    model = create_model(num_classes=196, freeze_base=True)
+    model = create_model(num_classes=196, freeze_base=False)
     
     print("--- Model Architecture ---")
     print(model)

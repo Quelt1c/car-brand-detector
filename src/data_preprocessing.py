@@ -60,13 +60,16 @@ def process_test_annotations(annotations):
 
 data_transforms = {
     'train': transforms.Compose([
-        transforms.Resize((224, 224)),
+        
+        transforms.RandomResizedCrop(224, scale=(0.8, 1.0)), 
         transforms.RandomHorizontalFlip(),
+        transforms.RandomRotation(15), 
+        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1), 
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
     'val': transforms.Compose([
-        transforms.Resize((224, 224)),
+        transforms.Resize((224, 224)), 
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
@@ -76,6 +79,7 @@ data_transforms = {
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ]),
 }
+
 
 def get_data_loaders(root_dir, annotations_file, batch_size=32, num_workers=4, val_split=0.2):
     """Creates and returns training and validation data loaders."""
