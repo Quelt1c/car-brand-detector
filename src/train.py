@@ -4,6 +4,7 @@ import os
 import torch
 import torch.nn as nn
 import torch.optim as optim
+from src import model
 from src.model import create_model
 from src.data_preprocessing import get_data_loaders
 
@@ -45,14 +46,27 @@ def main():
 
     # 3. Initialize Model
     print("Creating model...")
-    model = create_model(num_classes=NUM_CLASSES, freeze_base=True)
+    model = create_model(num_classes=NUM_CLASSES, freeze_base=False)
     model.to(device)
+
+    if os.path.exists(MODEL_SAVE_PATH):
+        print(f"🔍 Saved model weights found at: {MODEL_SAVE_PATH}")
+        print("📥 Loading model weights...")
+        try:
+            # Load the model "brains" from the file
+            model.load_state_dict(torch.load(MODEL_SAVE_PATH, map_location=device))
+            print("✅ Success! Continuing training from where we left off.")
+        except Exception as e:
+            print(f"❌ Error loading model (architecture might have changed?): {e}")
+            print("⚠️ Starting from scratch.")
+    else:
+        print("🆕 No saved model found. Starting training from scratch.")
 
     # 4. Define Loss Function and Optimizer
     criterion = nn.CrossEntropyLoss()
     
     # We are only training the final 'fc' layer, as the base is frozen
-    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
+    optimizer = optim.Adam(model.fc.parameters(), lr=LEARNING_RATE, weight_decay=1e-4)
     
     # --- Training Loop (Task 2.2) ---
     print("Starting training...")
