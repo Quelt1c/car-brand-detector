@@ -18,8 +18,8 @@ except Exception:
     loadmat = None  # optional
 
 
-DEFAULT_WEIGHTS = Path("models/car_brand_detector_resnet50.pth")
-DEFAULT_META = Path("data/dataset/car_devkit/devkit/cars_meta.mat")
+DEFAULT_WEIGHTS = Path("../models/car_brand_detector_resnet50.pth")
+DEFAULT_META = Path("../data/dataset/car_devkit/devkit/cars_meta.mat")
 
 
 @dataclass
@@ -60,7 +60,6 @@ def load_class_names(cars_meta_mat: Path) -> Optional[List[str]]:
 
 
 def build_preprocess(size: int = 224) -> transforms.Compose:
-    # як у тебе на val/test
     return transforms.Compose(
         [
             transforms.Resize((size, size)),

@@ -25,8 +25,8 @@ from src.predict import (  # noqa: E402
 
 st.set_page_config(page_title="Car Brand Classifier", page_icon="🚗", layout="wide")
 
-DEFAULT_TEST_FOLDER = Path("data/dataset/cars_test/cars_test")
-DEFAULT_TEST_CSV = Path("data/processed/test_annotations.csv")
+DEFAULT_TEST_FOLDER = Path("../data/dataset/cars_test/cars_test")
+DEFAULT_TEST_CSV = Path("../data/processed/test_annotations.csv")
 
 
 def label_name(name: str, idx: int) -> str:
